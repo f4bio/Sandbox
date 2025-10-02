@@ -22,3 +22,19 @@
 
 - name: Create Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/create_docker_container.yml"
+
+- name: "Import Agent Role"
+  ansible.builtin.include_role:
+    name: beszel-agent
+  vars:
+    beszel_agent: ["beszel-agent"]
+
+- name: Prompt for user to input agent token
+  ansible.builtin.pause:
+    prompt: "Go to Beszel Hub, add new system and enter the token displayed (e.g., 'a1564dba-9d64-4be4-94ad-f209e9dd733f')"
+  register: agent_token
+
+- name: Prompt for user to input 
+  ansible.builtin.pause:
+    prompt: "...and the corresponding agent key (e.g., 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC2YufokpaoKXT5mimcuu0JdfWadErOGAC6hn8+yB5D+')"
+  register: agent_key
